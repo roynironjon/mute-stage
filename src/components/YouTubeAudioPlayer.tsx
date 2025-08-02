@@ -28,6 +28,7 @@ export default function YouTubeAudioPlayer() {
   const [currentTime, setCurrentTime] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  const [customImage, setCustomImage] = useState('');
   
   const playerRef = useRef<any>(null);
   const { toast } = useToast();
@@ -239,6 +240,32 @@ export default function YouTubeAudioPlayer() {
           </div>
         </Card>
 
+        {/* Custom Image Input */}
+        <Card className="p-6 bg-gradient-to-br from-card to-player-card border-border/50">
+          <div className="space-y-3">
+            <h3 className="text-lg font-semibold">Custom Image for Player</h3>
+            <Input
+              placeholder="Enter image URL for the media player..."
+              value={customImage}
+              onChange={(e) => setCustomImage(e.target.value)}
+              className="bg-secondary border-border/50 focus:border-primary"
+            />
+            {customImage && (
+              <div className="mt-3">
+                <p className="text-sm text-muted-foreground mb-2">Preview:</p>
+                <img
+                  src={customImage}
+                  alt="Custom preview"
+                  className="w-32 h-24 object-cover rounded-md"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
+              </div>
+            )}
+          </div>
+        </Card>
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Search Results */}
           <div className="lg:col-span-2">
@@ -272,14 +299,14 @@ export default function YouTubeAudioPlayer() {
             {currentVideo && (
               <Card className="p-6 bg-gradient-to-br from-player-card to-card border-border/50 shadow-xl">
                 <div className="text-center space-y-4">
-                  <div className="relative">
-                    <img
-                      src={currentVideo.thumbnail}
-                      alt={currentVideo.title}
-                      className="w-full h-48 object-cover rounded-lg"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-lg" />
-                  </div>
+                   <div className="relative">
+                     <img
+                       src={customImage || currentVideo.thumbnail}
+                       alt={currentVideo.title}
+                       className="w-full h-48 object-cover rounded-lg"
+                     />
+                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-lg" />
+                   </div>
                   
                   <div className="space-y-2">
                     <h3 className="font-semibold text-sm line-clamp-2">{currentVideo.title}</h3>
