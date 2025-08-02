@@ -52,6 +52,19 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				// Audio Player Specific Colors
+				player: {
+					bg: 'hsl(var(--player-bg))',
+					card: 'hsl(var(--player-card))',
+				},
+				progress: {
+					bg: 'hsl(var(--progress-bg))',
+					fill: 'hsl(var(--progress-fill))',
+				},
+				volume: {
+					bg: 'hsl(var(--volume-bg))',
+					fill: 'hsl(var(--volume-fill))',
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
