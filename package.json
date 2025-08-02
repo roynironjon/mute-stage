@@ -1,8 +1,8 @@
 {
-  "homepage": "https://roynironjon.github.io/mute-stage",
   "name": "vite_react_shadcn_ts",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://roynironjon.github.io/mute-stage",
   "type": "module",
   "scripts": {
     "dev": "vite",

@@ -271,7 +271,7 @@ export default function YouTubeAudioPlayer() {
 
             {/* Image Upload */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">Your Image</label>
+              <label className="text-sm font-medium text-foreground"> Image</label>
               <input
                 type="file"
                 accept="image/*"
@@ -348,11 +348,12 @@ export default function YouTubeAudioPlayer() {
                       {/* Name Display with Animation */}
                       {userName && (
                         <div className="absolute bottom-3 left-3 right-3 animate-fade-in">
-                          <div className="bg-white/10 backdrop-blur-md rounded-lg px-3 py-2 border border-white/20">
-                            <p className="text-white font-semibold text-sm tracking-wide">
-                              {userName}
-                            </p>
-                          </div>
+                        <div className="px-3 py-2 text-left">
+                          <p className="text-white font-semibold text-xl tracking-wide text-shadow-md animate-bounce text-blue-300 drop-shadow-lg">
+                            {userName}
+                          </p>
+                        </div>
+
                         </div>
                       )}
                       
