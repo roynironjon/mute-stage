@@ -30,6 +30,7 @@ export default function YouTubeAudioPlayer() {
   const [isMuted, setIsMuted] = useState(false);
   const [customImage, setCustomImage] = useState('');
   const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
+  const [userName, setUserName] = useState('');
   
   const playerRef = useRef<any>(null);
   const { toast } = useToast();
@@ -252,27 +253,51 @@ export default function YouTubeAudioPlayer() {
 
         {/* Custom Image Upload */}
         <Card className="p-6 bg-gradient-to-br from-card to-player-card border-border/50">
-          <div className="space-y-3">
-            <h3 className="text-lg font-semibold">Upload Custom Image for Player</h3>
-            <div className="flex items-center gap-3">
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              Customize Your Player
+            </h3>
+            
+            {/* Name Input */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">Your Name</label>
+              <Input
+                placeholder="Enter your name..."
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+                className="bg-secondary border-border/50 focus:border-primary transition-all duration-300"
+              />
+            </div>
+
+            {/* Image Upload */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">Custom Image</label>
               <input
                 type="file"
                 accept="image/*"
                 onChange={handleImageSelect}
-                className="block w-full text-sm text-muted-foreground file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-primary file:text-primary-foreground hover:file:bg-primary/90 file:cursor-pointer"
+                className="block w-full text-sm text-muted-foreground file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-gradient-to-r file:from-primary file:to-accent file:text-white hover:file:from-primary/90 hover:file:to-accent/90 file:cursor-pointer file:transition-all file:duration-300"
               />
             </div>
+
             {customImage && (
-              <div className="mt-3">
+              <div className="mt-4 animate-fade-in">
                 <p className="text-sm text-muted-foreground mb-2">Preview:</p>
-                <img
-                  src={customImage}
-                  alt="Custom preview"
-                  className="w-32 h-24 object-cover rounded-md"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                  }}
-                />
+                <div className="relative w-32 h-24 rounded-lg overflow-hidden">
+                  <img
+                    src={customImage}
+                    alt="Custom preview"
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
+                  {userName && (
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+                      <p className="text-white text-xs font-medium animate-fade-in">{userName}</p>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
           </div>
@@ -310,15 +335,30 @@ export default function YouTubeAudioPlayer() {
             {/* Now Playing Card */}
             {currentVideo && (
               <Card className="p-6 bg-gradient-to-br from-player-card to-card border-border/50 shadow-xl">
-                <div className="text-center space-y-4">
-                   <div className="relative">
-                     <img
-                       src={customImage || currentVideo.thumbnail}
-                       alt={currentVideo.title}
-                       className="w-full h-48 object-cover rounded-lg"
-                     />
-                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-lg" />
-                   </div>
+                 <div className="text-center space-y-4">
+                    <div className="relative overflow-hidden rounded-lg group">
+                      <img
+                        src={customImage || currentVideo.thumbnail}
+                        alt={currentVideo.title}
+                        className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                      
+                      {/* Name Display with Animation */}
+                      {userName && (
+                        <div className="absolute bottom-3 left-3 right-3 animate-fade-in">
+                          <div className="bg-white/10 backdrop-blur-md rounded-lg px-3 py-2 border border-white/20">
+                            <p className="text-white font-semibold text-sm tracking-wide">
+                              {userName}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                      
+                      {/* Decorative Elements */}
+                      <div className="absolute top-3 right-3 w-2 h-2 bg-accent rounded-full animate-pulse" />
+                      <div className="absolute top-6 right-6 w-1 h-1 bg-primary rounded-full animate-pulse delay-300" />
+                    </div>
                   
                   <div className="space-y-2">
                     <h3 className="font-semibold text-sm line-clamp-2">{currentVideo.title}</h3>
