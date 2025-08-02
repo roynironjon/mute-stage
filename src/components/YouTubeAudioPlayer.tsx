@@ -222,10 +222,10 @@ export default function YouTubeAudioPlayer() {
       <div className="max-w-6xl mx-auto space-y-6">
         {/* Header */}
         <div className="text-center space-y-4">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            YouTube Audio Player
+          <h1 className="text-4xl mt-4 font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            Naru Audio Player
           </h1>
-          <p className="text-muted-foreground">Search and play YouTube videos as audio only</p>
+          {/* <p className="text-muted-foreground">Search and play YouTube videos as audio only</p> */}
         </div>
 
         {/* Search */}
@@ -257,7 +257,7 @@ export default function YouTubeAudioPlayer() {
             <h3 className="text-lg font-semibold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               Customize Your Player
             </h3>
-            
+          <div className="flex gap-6">
             {/* Name Input */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-foreground">Your Name</label>
@@ -271,7 +271,7 @@ export default function YouTubeAudioPlayer() {
 
             {/* Image Upload */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">Custom Image</label>
+              <label className="text-sm font-medium text-foreground">Your Image</label>
               <input
                 type="file"
                 accept="image/*"
@@ -279,7 +279,8 @@ export default function YouTubeAudioPlayer() {
                 className="block w-full text-sm text-muted-foreground file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-gradient-to-r file:from-primary file:to-accent file:text-white hover:file:from-primary/90 hover:file:to-accent/90 file:cursor-pointer file:transition-all file:duration-300"
               />
             </div>
-
+            </div>
+            {/* Custom Image Preview */}
             {customImage && (
               <div className="mt-4 animate-fade-in">
                 <p className="text-sm text-muted-foreground mb-2">Preview:</p>
@@ -446,11 +447,11 @@ export default function YouTubeAudioPlayer() {
             <Card className="p-6 bg-gradient-to-br from-card to-player-card border-border/50">
               <div className="text-center space-y-4">
                 <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-primary to-accent flex items-center justify-center text-2xl font-bold text-white">
-                  YT
+                  NR
                 </div>
                 <div>
                   <h3 className="font-semibold">Your Music Player</h3>
-                  <p className="text-muted-foreground text-sm">Enjoy YouTube audio without video</p>
+                  <p className="text-muted-foreground text-sm">Enjoy Naru audio without video</p>
                 </div>
               </div>
             </Card>
