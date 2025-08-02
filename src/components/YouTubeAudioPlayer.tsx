@@ -20,6 +20,7 @@ export default function YouTubeAudioPlayer() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<YouTubeVideo[]>([]);
   const [currentVideo, setCurrentVideo] = useState<YouTubeVideo | null>(null);
+  const [currentVideoIndex, setCurrentVideoIndex] = useState<number>(-1);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState([50]);
   const [progress, setProgress] = useState([0]);
@@ -86,8 +87,16 @@ export default function YouTubeAudioPlayer() {
     }
   };
 
-  const loadVideo = (video: YouTubeVideo) => {
+  const loadVideo = (video: YouTubeVideo, index?: number) => {
     setCurrentVideo(video);
+    
+    // Set the current index if provided, otherwise find it in the results
+    if (index !== undefined) {
+      setCurrentVideoIndex(index);
+    } else {
+      const foundIndex = searchResults.findIndex(v => v.id === video.id);
+      setCurrentVideoIndex(foundIndex);
+    }
     
     if (playerRef.current) {
       playerRef.current.destroy();
@@ -119,6 +128,20 @@ export default function YouTubeAudioPlayer() {
         },
       },
     });
+  };
+
+  const playNextVideo = () => {
+    if (searchResults.length > 0 && currentVideoIndex < searchResults.length - 1) {
+      const nextIndex = currentVideoIndex + 1;
+      loadVideo(searchResults[nextIndex], nextIndex);
+    }
+  };
+
+  const playPreviousVideo = () => {
+    if (searchResults.length > 0 && currentVideoIndex > 0) {
+      const prevIndex = currentVideoIndex - 1;
+      loadVideo(searchResults[prevIndex], prevIndex);
+    }
   };
 
   const togglePlayPause = () => {
@@ -281,6 +304,8 @@ export default function YouTubeAudioPlayer() {
                   {/* Controls */}
                   <div className="flex items-center justify-center gap-4">
                     <Button
+                      onClick={playPreviousVideo}
+                      disabled={currentVideoIndex <= 0 || searchResults.length === 0}
                       size="sm"
                       variant="ghost"
                       className="h-8 w-8 p-0"
@@ -297,6 +322,8 @@ export default function YouTubeAudioPlayer() {
                     </Button>
                     
                     <Button
+                      onClick={playNextVideo}
+                      disabled={currentVideoIndex >= searchResults.length - 1 || searchResults.length === 0}
                       size="sm"
                       variant="ghost"
                       className="h-8 w-8 p-0"
