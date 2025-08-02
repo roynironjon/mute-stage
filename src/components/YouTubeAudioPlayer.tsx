@@ -29,6 +29,7 @@ export default function YouTubeAudioPlayer() {
   const [isLoading, setIsLoading] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [customImage, setCustomImage] = useState('');
+  const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
   
   const playerRef = useRef<any>(null);
   const { toast } = useToast();
@@ -191,6 +192,15 @@ export default function YouTubeAudioPlayer() {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
+  const handleImageSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file && file.type.startsWith('image/')) {
+      setSelectedImageFile(file);
+      const imageUrl = URL.createObjectURL(file);
+      setCustomImage(imageUrl);
+    }
+  };
+
   // Update progress
   useEffect(() => {
     const interval = setInterval(() => {
@@ -240,16 +250,18 @@ export default function YouTubeAudioPlayer() {
           </div>
         </Card>
 
-        {/* Custom Image Input */}
+        {/* Custom Image Upload */}
         <Card className="p-6 bg-gradient-to-br from-card to-player-card border-border/50">
           <div className="space-y-3">
-            <h3 className="text-lg font-semibold">Custom Image for Player</h3>
-            <Input
-              placeholder="Enter image URL for the media player..."
-              value={customImage}
-              onChange={(e) => setCustomImage(e.target.value)}
-              className="bg-secondary border-border/50 focus:border-primary"
-            />
+            <h3 className="text-lg font-semibold">Upload Custom Image for Player</h3>
+            <div className="flex items-center gap-3">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageSelect}
+                className="block w-full text-sm text-muted-foreground file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-primary file:text-primary-foreground hover:file:bg-primary/90 file:cursor-pointer"
+              />
+            </div>
             {customImage && (
               <div className="mt-3">
                 <p className="text-sm text-muted-foreground mb-2">Preview:</p>
