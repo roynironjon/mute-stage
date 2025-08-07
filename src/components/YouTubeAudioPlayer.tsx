@@ -116,6 +116,9 @@ export default function YouTubeAudioPlayer() {
         fs: 0,
         modestbranding: 1,
         rel: 0,
+        playsinline: 1, // Prevents opening in new tab on mobile
+        enablejsapi: 1, // Enables JavaScript API
+        origin: window.location.origin, // Required for mobile
       },
       events: {
         onReady: (event: any) => {
@@ -127,7 +130,15 @@ export default function YouTubeAudioPlayer() {
             setIsPlaying(true);
           } else if (event.data === window.YT.PlayerState.PAUSED) {
             setIsPlaying(false);
+          } else if (event.data === 0) { // YouTube PlayerState.ENDED = 0
+            // Auto-play next song when current song ends
+            playNextVideo();
           }
+        },
+        onError: (event: any) => {
+          console.error('YouTube player error:', event.data);
+          // Try to play next video if current one fails
+          playNextVideo();
         },
       },
     });
